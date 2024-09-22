@@ -14,10 +14,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:id="@+id/img_finished_item"
-            android:layout_width="80dp"
-            android:layout_height="100dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             tools:src="@tools:sample/avatars"
             tools:ignore="ContentDescription" />
 
@@ -42,7 +42,7 @@
                 android:fontFamily="@font/poppins_regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
+                android:maxLines="4"
                 android:textSize="12sp"
                 tools:text="Ini acara milik fufufafa Ini acara milik fufufafa Ini acara milik fufufafaIni acara milik fufufafa"/>
         </LinearLayout>

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aminfaruq.dicodingevent.data.response.EventDetail
 import com.aminfaruq.dicodingevent.databinding.FinishedSectionBinding
 import com.aminfaruq.dicodingevent.databinding.UpcomingSectionBinding
-import com.aminfaruq.dicodingevent.ui.adapter.FinishedItemAdapter
-import com.aminfaruq.dicodingevent.ui.adapter.UpcomingItemAdapter
+import com.aminfaruq.dicodingevent.ui.finished.FinishedItemAdapter
+import com.aminfaruq.dicodingevent.ui.upcoming.UpcomingItemAdapter
 
 class HomeAdapter(
     private val upcomingEvents: List<EventDetail>,

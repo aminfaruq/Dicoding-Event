@@ -29,23 +29,25 @@ class UpcomingViewModel : ViewModel() {
     }
 
     private fun requestUpcoming() {
-        _isLoading.value = true
-        val client = ApiConfig.getApiService().getListEvent(active = UPCOMING)
-        client.enqueue(object : Callback<EventResponse> {
-            override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    _listUpcoming.value = response.body()?.listEvents ?: emptyList()
-                } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+        if (_listUpcoming.value.isNullOrEmpty()) {
+            _isLoading.value = true
+            val client = ApiConfig.getApiService().getListEvent(active = UPCOMING)
+            client.enqueue(object : Callback<EventResponse> {
+                override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
+                    _isLoading.value = false
+                    if (response.isSuccessful) {
+                        _listUpcoming.value = response.body()?.listEvents ?: emptyList()
+                    } else {
+                        Log.e(TAG, "onFailure: ${response.message()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<EventResponse>, t: Throwable) {
-                _isLoading.value = false
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
-            }
+                override fun onFailure(call: Call<EventResponse>, t: Throwable) {
+                    _isLoading.value = false
+                    Log.e(TAG, "onFailure: ${t.message.toString()}")
+                }
 
-        })
+            })
+        }
     }
 }

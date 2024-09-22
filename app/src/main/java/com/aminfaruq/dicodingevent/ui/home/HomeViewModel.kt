@@ -22,8 +22,8 @@ class HomeViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _snackbarText = MutableLiveData<Event<String>>()
-    val snackbarText: LiveData<Event<String>> = _snackbarText
+    private val _isError = MutableLiveData<Boolean>()
+    val isError: LiveData<Boolean> = _isError
 
     companion object {
         private const val TAG = "HomeViewModel"
@@ -36,45 +36,52 @@ class HomeViewModel : ViewModel() {
         requestFinished()
     }
 
-    private fun requestUpcoming() {
-        _isLoading.value = true
-        val client = ApiConfig.getApiService().getListEvent(active = UPCOMING)
-        client.enqueue(object : Callback<EventResponse> {
-            override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    _listUpcoming.value = response.body()?.listEvents ?: emptyList()
-                } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+    fun requestUpcoming() {
+        if (_listUpcoming.value.isNullOrEmpty()) {
+            _isLoading.value = true
+            val client = ApiConfig.getApiService().getListEvent(active = UPCOMING)
+            client.enqueue(object : Callback<EventResponse> {
+                override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
+                    _isLoading.value = false
+                    if (response.isSuccessful) {
+                        _isError.value = false
+                        _listUpcoming.value = response.body()?.listEvents ?: emptyList()
+                    } else {
+                        _isError.value = true
+                        Log.e(TAG, "onFailure: ${response.message()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<EventResponse>, t: Throwable) {
-                _isLoading.value = false
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
-            }
+                override fun onFailure(call: Call<EventResponse>, t: Throwable) {
+                    _isLoading.value = false
+                    _isError.value = true
+                    Log.e(TAG, "onFailure: ${t.message.toString()}")
+                }
 
-        })
+            })
+        }
     }
 
-    private fun requestFinished() {
-        _isLoading.value = true
-        val client = ApiConfig.getApiService().getListEvent(active = FINISHED, limit = 20)
-        client.enqueue(object : Callback<EventResponse> {
-            override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    _listFinished.value = response.body()?.listEvents ?: emptyList()
-                } else {
-                    Log.e(TAG, "onFailure: ${response.message()}")
+    fun requestFinished() {
+        if (_listFinished.value.isNullOrEmpty()) {
+            _isLoading.value = true
+            val client = ApiConfig.getApiService().getListEvent(active = FINISHED, limit = 20)
+            client.enqueue(object : Callback<EventResponse> {
+                override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
+                    _isLoading.value = false
+                    if (response.isSuccessful) {
+                        _listFinished.value = response.body()?.listEvents ?: emptyList()
+                    } else {
+                        Log.e(TAG, "onFailure: ${response.message()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<EventResponse>, t: Throwable) {
-                _isLoading.value = false
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
-            }
+                override fun onFailure(call: Call<EventResponse>, t: Throwable) {
+                    _isLoading.value = false
+                    Log.e(TAG, "onFailure: ${t.message.toString()}")
+                }
 
-        })
+            })
+        }
     }
 }

@@ -12,7 +12,6 @@ import com.aminfaruq.dicodingevent.MainActivity
 import com.aminfaruq.dicodingevent.R
 import com.aminfaruq.dicodingevent.data.response.EventDetail
 import com.aminfaruq.dicodingevent.databinding.FragmentUpcomingBinding
-import com.aminfaruq.dicodingevent.ui.adapter.UpcomingItemAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class UpcomingFragment : Fragment() {
@@ -67,5 +66,4 @@ class UpcomingFragment : Fragment() {
     private fun showLoading(isLoading: Boolean) {
         binding.upcomingLoadingView.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
 }

@@ -12,6 +12,7 @@ import com.aminfaruq.dicodingevent.MainActivity
 import com.aminfaruq.dicodingevent.R
 import com.aminfaruq.dicodingevent.data.response.EventDetail
 import com.aminfaruq.dicodingevent.databinding.FragmentHomeBinding
+import com.aminfaruq.dicodingevent.utils.ErrorDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeFragment : Fragment() {
@@ -42,6 +43,21 @@ class HomeFragment : Fragment() {
             showLoading(it)
         }
 
+        viewModel.isError.observe(viewLifecycleOwner) {
+            if (it) {
+                val errorDialog = ErrorDialog()
+                errorDialog.setRetryCallback(object : ErrorDialog.RetryCallback {
+                    override fun onRetry() {
+                        // Handle the retry event here
+                        errorDialog.dismiss()
+                        viewModel.requestUpcoming()
+                        viewModel.requestFinished()
+                    }
+                })
+                errorDialog.show(parentFragmentManager, "ErrorDialog")
+            }
+        }
+
         binding.rvHome.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -67,5 +83,4 @@ class HomeFragment : Fragment() {
     private fun showLoading(isLoading: Boolean) {
         binding.homeLoadingView.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-
 }
