@@ -3,4 +3,5 @@
     <string name="home" tools:ignore="ExtraTranslation">Home</string>
     <string name="upcoming" tools:ignore="ExtraTranslation">Upcoming</string>
     <string name="finished" tools:ignore="ExtraTranslation">Finished</string>
+    <string name="dicoding_event">Dicoding Event</string>
 </resources>
