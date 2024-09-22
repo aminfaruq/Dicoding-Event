@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.aminfaruq.dicodingevent.data.api.ApiConfig
 import com.aminfaruq.dicodingevent.data.response.EventDetail
 import com.aminfaruq.dicodingevent.data.response.EventResponse
-import com.aminfaruq.dicodingevent.utils.Event
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

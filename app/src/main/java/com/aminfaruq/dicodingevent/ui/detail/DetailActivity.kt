@@ -1,8 +1,11 @@
 package com.aminfaruq.dicodingevent.ui.detail
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
@@ -11,15 +14,13 @@ import com.aminfaruq.dicodingevent.utils.ErrorDialog
 import com.bumptech.glide.Glide
 
 class DetailActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityDetailBinding
     private val viewModel by viewModels<DetailViewModel>()
-
     companion object {
         const val EXTRA_ID = "ID"
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -28,19 +29,34 @@ class DetailActivity : AppCompatActivity() {
         val id = intent.getIntExtra(EXTRA_ID, 0)
 
         viewModel.requestDetail(id)
-        viewModel.eventDetail.observe(this) {
+        viewModel.eventDetail.observe(this) { item ->
             Glide.with(this)
-                .load(it.mediaCover)
+                .load(item.mediaCover)
                 .into(binding.imageCover)
 
-            binding.eventName.text = it.name
-            binding.ownerName.text = it.ownerName
-            binding.beginTime.text = it.beginTime
-            binding.quota.text = "Quota: ${it.quota.toString()}"
+            binding.eventName.text = item.name
+            binding.ownerName.text = item.ownerName
+            binding.beginTime.text = item.beginTime
+            binding.quota.text = "Quota: ${item.quota.toString()}"
             binding.description.text = HtmlCompat.fromHtml(
-                it.description.toString(),
+                item.description.toString(),
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
+
+            binding.openLinkButton.setOnClickListener {
+                val url = item.link
+                // Membuat Implicit Intent
+                val openLinkIntent = Intent(Intent.ACTION_VIEW)
+                openLinkIntent.data = Uri.parse(url)
+
+                // Memeriksa apakah ada aplikasi yang bisa menangani Intent ini
+                if (openLinkIntent.resolveActivity(packageManager) != null) {
+                    startActivity(openLinkIntent)
+                } else {
+                    // Tampilkan pesan jika tidak ada aplikasi yang bisa membuka link
+                    Toast.makeText(this, "Tidak ada aplikasi yang bisa membuka link ini", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         viewModel.isLoading.observe(this) {
@@ -60,14 +76,14 @@ class DetailActivity : AppCompatActivity() {
                 errorDialog.show(supportFragmentManager, "ErrorDialog")
             }
         }
-
-        binding.openLinkButton .setOnClickListener {
-
-        }
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.openLinkButton.visibility = if (isLoading) View.GONE else View.VISIBLE
+        if (isLoading) {
+            binding.openLinkButton.visibility = View.GONE
+        } else {
+            binding.openLinkButton.visibility = View.VISIBLE
+        }
         binding.detailLoadingView.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
