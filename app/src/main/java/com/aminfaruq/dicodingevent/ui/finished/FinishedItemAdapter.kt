@@ -19,7 +19,7 @@ class FinishedItemAdapter(
     }
 
     class ViewHolder(val binding: FinishedItemBinding) : RecyclerView.ViewHolder(binding.root)
-    class EmptyViewHolder(private val binding: EmptyViewBinding) :
+    class EmptyViewHolder(binding: EmptyViewBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -1,6 +1,5 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Dicoding Event</string>
-    <string name="dicoding_event">Dicoding Event</string>
     <string name="upcoming_event">Upcoming Event</string>
     <string name="finished_event">Finished Event</string>
     <string name="retry">Retry</string>
