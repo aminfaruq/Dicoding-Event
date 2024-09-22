@@ -1,6 +1,8 @@
 package com.aminfaruq.dicodingevent.data.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class EventResponse(
 
@@ -14,7 +16,7 @@ data class EventResponse(
 	val message: String?,
 
 	@field:SerializedName("event")
-	val event: EventDetail?
+	val event: EventDetail
 )
 
 data class EventDetail(
@@ -60,4 +62,5 @@ data class EventDetail(
 
 	@field:SerializedName("category")
 	val category: String?
+
 )

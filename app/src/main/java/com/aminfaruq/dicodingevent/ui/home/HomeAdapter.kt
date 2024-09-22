@@ -10,9 +10,13 @@ import com.aminfaruq.dicodingevent.databinding.UpcomingSectionBinding
 import com.aminfaruq.dicodingevent.ui.finished.FinishedItemAdapter
 import com.aminfaruq.dicodingevent.ui.upcoming.UpcomingItemAdapter
 
+interface OnItemClickListener {
+    fun onItemClick(id: Int)
+}
 class HomeAdapter(
     private val upcomingEvents: List<EventDetail>,
-    private val finishedEvents: List<EventDetail>
+    private val finishedEvents: List<EventDetail>,
+    private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -46,7 +50,7 @@ class HomeAdapter(
                     LinearLayoutManager.HORIZONTAL,
                     false
                 )
-                holder.binding.rvSectionUpcoming.adapter = UpcomingItemAdapter(upcomingEvents)
+                holder.binding.rvSectionUpcoming.adapter = UpcomingItemAdapter(upcomingEvents, onItemClickListener)
             }
             is HomeViewHolderFinished -> {
                 holder.binding.rvFinishedSection.layoutManager = LinearLayoutManager(
@@ -54,7 +58,7 @@ class HomeAdapter(
                     LinearLayoutManager.VERTICAL,
                     false
                 )
-                holder.binding.rvFinishedSection.adapter = FinishedItemAdapter(finishedEvents)
+                holder.binding.rvFinishedSection.adapter = FinishedItemAdapter(finishedEvents, onItemClickListener)
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.aminfaruq.dicodingevent.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +13,11 @@ import com.aminfaruq.dicodingevent.MainActivity
 import com.aminfaruq.dicodingevent.R
 import com.aminfaruq.dicodingevent.data.response.EventDetail
 import com.aminfaruq.dicodingevent.databinding.FragmentHomeBinding
+import com.aminfaruq.dicodingevent.ui.detail.DetailActivity
 import com.aminfaruq.dicodingevent.utils.ErrorDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment() , OnItemClickListener{
 
     private val viewModel by viewModels<HomeViewModel>()
     private lateinit var binding: FragmentHomeBinding
@@ -76,11 +78,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupList(upcomingEvents: List<EventDetail>, finishedEvents: List<EventDetail>) {
-        adapter = HomeAdapter(upcomingEvents, finishedEvents)
+        adapter = HomeAdapter(upcomingEvents, finishedEvents, this)
         binding.rvHome.adapter = adapter
     }
 
     private fun showLoading(isLoading: Boolean) {
         binding.homeLoadingView.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    override fun onItemClick(id: Int) {
+        val moveIntoDetail = Intent(requireContext(), DetailActivity::class.java)
+        moveIntoDetail.putExtra(DetailActivity.EXTRA_ID, id)
+        startActivity(moveIntoDetail)
     }
 }

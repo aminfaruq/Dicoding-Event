@@ -4,5 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorHint">#808080</color>
     <color name="red">#FF0000</color>
-
+    <color name="teal_700">#00796B</color>
 </resources>

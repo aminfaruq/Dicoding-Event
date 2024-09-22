@@ -1,5 +1,6 @@
 package com.aminfaruq.dicodingevent.ui.upcoming
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +13,12 @@ import com.aminfaruq.dicodingevent.MainActivity
 import com.aminfaruq.dicodingevent.R
 import com.aminfaruq.dicodingevent.data.response.EventDetail
 import com.aminfaruq.dicodingevent.databinding.FragmentUpcomingBinding
+import com.aminfaruq.dicodingevent.ui.detail.DetailActivity
+import com.aminfaruq.dicodingevent.ui.home.OnItemClickListener
+import com.aminfaruq.dicodingevent.utils.ErrorDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class UpcomingFragment : Fragment() {
+class UpcomingFragment : Fragment(), OnItemClickListener {
 
     private val viewModel by viewModels<UpcomingViewModel>()
     private lateinit var binding: FragmentUpcomingBinding
@@ -42,6 +46,20 @@ class UpcomingFragment : Fragment() {
             showLoading(it)
         }
 
+        viewModel.isError.observe(viewLifecycleOwner) {
+            if (it) {
+                val errorDialog = ErrorDialog()
+                errorDialog.setRetryCallback(object : ErrorDialog.RetryCallback {
+                    override fun onRetry() {
+                        // Handle the retry event here
+                        errorDialog.dismiss()
+                        viewModel.requestUpcoming()
+                    }
+                })
+                errorDialog.show(parentFragmentManager, "ErrorDialog")
+            }
+        }
+
         binding.rvUpcoming.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -59,11 +77,17 @@ class UpcomingFragment : Fragment() {
     }
 
     private fun setupList(list: List<EventDetail>) {
-        adapter = UpcomingItemAdapter(list)
+        adapter = UpcomingItemAdapter(list, this)
         binding.rvUpcoming.adapter = adapter
     }
 
     private fun showLoading(isLoading: Boolean) {
         binding.upcomingLoadingView.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    override fun onItemClick(id: Int) {
+        val moveIntoDetail = Intent(requireContext(), DetailActivity::class.java)
+        moveIntoDetail.putExtra(DetailActivity.EXTRA_ID, id)
+        startActivity(moveIntoDetail)
     }
 }
