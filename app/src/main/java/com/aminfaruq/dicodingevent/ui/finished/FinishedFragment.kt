@@ -10,10 +10,6 @@ import com.aminfaruq.dicodingevent.R
 
 class FinishedFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = FinishedFragment()
-    }
-
     private lateinit var viewModel: FinishedViewModel
 
     override fun onCreateView(
@@ -23,10 +19,8 @@ class FinishedFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_finished, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FinishedViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
 }

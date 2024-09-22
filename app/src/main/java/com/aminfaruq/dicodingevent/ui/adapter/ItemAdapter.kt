@@ -1,4 +1,4 @@
-package com.aminfaruq.dicodingevent.ui.home.adapter
+package com.aminfaruq.dicodingevent.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -50,13 +50,3 @@ class FinishedItemAdapter (private val listEvents: List<EventDetail>) : Recycler
             .into(holder.binding.imgFinishedItem)
     }
 }
-/*
-*
-*
-class HomeViewHolderUpcoming(val binding: UpcomingSectionBinding) :
-    RecyclerView.ViewHolder(binding.root)
-
-class HomeViewHolderFinished(val binding: FinishedSectionBinding) :
-    RecyclerView.ViewHolder(binding.root)
-
-* */

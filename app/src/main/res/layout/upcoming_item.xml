@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/imgUpcomingItem"
-            android:layout_width="230dp"
-            android:layout_height="250dp"
+            android:layout_width="160dp"
+            android:layout_height="150dp"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toTopOf="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,11 +46,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/poppins_regular"
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textAlignment="textStart"
-                    android:textSize="18sp"
+                    android:textSize="12sp"
                     tools:text="Acara fufufafa" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

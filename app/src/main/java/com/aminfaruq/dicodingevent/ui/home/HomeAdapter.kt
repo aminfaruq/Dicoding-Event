@@ -1,4 +1,4 @@
-package com.aminfaruq.dicodingevent.ui.home.adapter
+package com.aminfaruq.dicodingevent.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aminfaruq.dicodingevent.data.response.EventDetail
 import com.aminfaruq.dicodingevent.databinding.FinishedSectionBinding
 import com.aminfaruq.dicodingevent.databinding.UpcomingSectionBinding
+import com.aminfaruq.dicodingevent.ui.adapter.FinishedItemAdapter
+import com.aminfaruq.dicodingevent.ui.adapter.UpcomingItemAdapter
 
 class HomeAdapter(
     private val upcomingEvents: List<EventDetail>,

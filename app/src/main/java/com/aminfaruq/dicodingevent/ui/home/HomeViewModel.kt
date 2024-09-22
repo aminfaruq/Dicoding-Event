@@ -29,7 +29,6 @@ class HomeViewModel : ViewModel() {
         private const val TAG = "HomeViewModel"
         private const val UPCOMING = 1
         private const val FINISHED = 0
-
     }
 
     init {

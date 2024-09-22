@@ -1,8 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Dicoding Event</string>
-    <string name="home" tools:ignore="ExtraTranslation">Home</string>
-    <string name="upcoming" tools:ignore="ExtraTranslation">Upcoming</string>
-    <string name="finished" tools:ignore="ExtraTranslation">Finished</string>
     <string name="dicoding_event">Dicoding Event</string>
     <string name="upcoming_event">Upcoming Event</string>
     <string name="finished_event">Finished Event</string>
