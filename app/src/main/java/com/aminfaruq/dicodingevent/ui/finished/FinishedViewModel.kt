@@ -1,6 +1,5 @@
 package com.aminfaruq.dicodingevent.ui.finished
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FinishedViewModel : ViewModel() {
+
     private val _listFinished = MutableLiveData<List<EventDetail>>()
     val listFinished: LiveData<List<EventDetail>> = _listFinished
 
@@ -20,11 +20,6 @@ class FinishedViewModel : ViewModel() {
 
     private val _isError = MutableLiveData<Boolean>()
     val isError: LiveData<Boolean> = _isError
-
-    companion object {
-        private const val TAG = "FinishedViewModel"
-        private const val FINISHED = 0
-    }
 
     init {
         requestFinished(canSearch = false)
@@ -51,15 +46,17 @@ class FinishedViewModel : ViewModel() {
                     _listFinished.value = response.body()?.listEvents ?: emptyList()
                 } else {
                     _isError.value = true
-                    Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<EventResponse>, t: Throwable) {
                 _isLoading.value = false
                 _isError.value = true
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
         })
+    }
+
+    companion object {
+        private const val FINISHED = 0
     }
 }

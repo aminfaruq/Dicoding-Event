@@ -4,4 +4,6 @@
     <string name="finished_event">Finished Event</string>
     <string name="retry">Retry</string>
     <string name="open_event">Open Event</string>
+    <string name="for_detail_image">for detail image</string>
+    <string name="image_finished_item">image finished item</string>
 </resources>

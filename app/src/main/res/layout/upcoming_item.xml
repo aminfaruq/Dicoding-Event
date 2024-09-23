@@ -50,8 +50,7 @@
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textAlignment="textStart"
-                    android:textSize="12sp"
-                    tools:text="Acara fufufafa" />
+                    android:textSize="12sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

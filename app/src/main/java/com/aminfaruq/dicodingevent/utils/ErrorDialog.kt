@@ -12,15 +12,12 @@ class ErrorDialog : DialogFragment() {
     private var _binding: CustomDialogBinding? = null
     private val binding get() = _binding
 
-    // Define a callback interface
     interface RetryCallback {
         fun onRetry()
     }
 
-    // Add a callback variable
     private var retryCallback: RetryCallback? = null
 
-    // Set the callback
     fun setRetryCallback(callback: RetryCallback) {
         retryCallback = callback
     }
@@ -31,7 +28,6 @@ class ErrorDialog : DialogFragment() {
         val view = binding?.root
 
         binding?.retryButton?.setOnClickListener {
-            // Call the callback when the retry button is clicked
             retryCallback?.onRetry()
         }
 

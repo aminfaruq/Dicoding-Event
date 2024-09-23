@@ -37,7 +37,10 @@ class DetailActivity : AppCompatActivity() {
             binding.eventName.text = item.name
             binding.ownerName.text = item.ownerName
             binding.beginTime.text = item.beginTime
-            binding.quota.text = "Quota: ${item.quota.toString()}"
+
+            val quota = item.quota ?: 0
+            val registrants = item.registrants ?: 0
+            binding.quota.text = "Quota: ${quota - registrants}"
             binding.description.text = HtmlCompat.fromHtml(
                 item.description.toString(),
                 HtmlCompat.FROM_HTML_MODE_LEGACY
@@ -45,16 +48,13 @@ class DetailActivity : AppCompatActivity() {
 
             binding.openLinkButton.setOnClickListener {
                 val url = item.link
-                // Membuat Implicit Intent
                 val openLinkIntent = Intent(Intent.ACTION_VIEW)
                 openLinkIntent.data = Uri.parse(url)
 
-                // Memeriksa apakah ada aplikasi yang bisa menangani Intent ini
                 if (openLinkIntent.resolveActivity(packageManager) != null) {
                     startActivity(openLinkIntent)
                 } else {
-                    // Tampilkan pesan jika tidak ada aplikasi yang bisa membuka link
-                    Toast.makeText(this, "Tidak ada aplikasi yang bisa membuka link ini", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "There no Application cant open this link", Toast.LENGTH_SHORT).show()
                 }
             }
         }

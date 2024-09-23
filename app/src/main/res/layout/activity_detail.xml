@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <!-- Gambar Event (imageLogo/mediaCover) -->
             <ImageView
                 android:id="@+id/image_cover"
                 android:layout_width="0dp"
@@ -31,9 +30,9 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars" />
+                tools:src="@tools:sample/avatars"
+                android:contentDescription="@string/for_detail_image" />
 
-            <!-- Nama Acara (name) -->
             <TextView
                 android:id="@+id/event_name"
                 android:layout_width="0dp"
@@ -43,10 +42,8 @@
                 android:textSize="24sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_cover"
-                tools:text="Nama Acara" />
+                app:layout_constraintTop_toBottomOf="@id/image_cover" />
 
-            <!-- Penyelenggara Acara (ownerName) -->
             <TextView
                 android:id="@+id/owner_name"
                 android:layout_width="0dp"
@@ -56,10 +53,8 @@
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/event_name"
-                tools:text="Penyelenggara: Nama Penyelenggara" />
+                app:layout_constraintTop_toBottomOf="@id/event_name" />
 
-            <!-- Waktu Acara (beginTime) -->
             <TextView
                 android:id="@+id/begin_time"
                 android:layout_width="0dp"
@@ -69,10 +64,8 @@
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/owner_name"
-                tools:text="Waktu Acara: 20 September 2024, 19:00" />
+                app:layout_constraintTop_toBottomOf="@id/owner_name" />
 
-            <!-- Sisa Kuota (quota - registrant) -->
             <TextView
                 android:id="@+id/quota"
                 android:layout_width="0dp"
@@ -82,10 +75,8 @@
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/begin_time"
-                tools:text="Sisa Kuota: 50 dari 100" />
+                app:layout_constraintTop_toBottomOf="@id/begin_time" />
 
-            <!-- Deskripsi Acara (description) -->
             <TextView
                 android:id="@+id/description"
                 android:layout_width="0dp"
@@ -95,10 +86,8 @@
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/quota"
-                tools:text="Deskripsi Acara: Ini adalah acara yang sangat menarik." />
+                app:layout_constraintTop_toBottomOf="@id/quota" />
 
-            <!-- Tombol untuk membuka link acara (link) -->
             <Button
                 android:id="@+id/open_link_button"
                 android:layout_width="wrap_content"

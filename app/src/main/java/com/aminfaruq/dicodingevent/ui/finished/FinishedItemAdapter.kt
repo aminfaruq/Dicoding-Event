@@ -13,11 +13,6 @@ class FinishedItemAdapter(
     private val listEvents: List<EventDetail>,
     private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    companion object {
-        private const val EMPTY_VIEW_TYPE = 0
-        private const val ITEM_VIEW_TYPE = 1
-    }
-
     class ViewHolder(val binding: FinishedItemBinding) : RecyclerView.ViewHolder(binding.root)
     class EmptyViewHolder(binding: EmptyViewBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -66,5 +61,10 @@ class FinishedItemAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return if (listEvents.isEmpty()) EMPTY_VIEW_TYPE else ITEM_VIEW_TYPE
+    }
+
+    companion object {
+        private const val EMPTY_VIEW_TYPE = 0
+        private const val ITEM_VIEW_TYPE = 1
     }
 }

@@ -12,6 +12,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class DetailViewModel : ViewModel() {
+
     private val _eventDetail = MutableLiveData<EventDetail>()
     val eventDetail: LiveData<EventDetail> = _eventDetail
 
@@ -20,10 +21,6 @@ class DetailViewModel : ViewModel() {
 
     private val _isError = MutableLiveData<Boolean>()
     val isError: LiveData<Boolean> = _isError
-
-    companion object {
-        private const val TAG = "DetailViewModel"
-    }
 
     fun requestDetail(id: Int) {
         val client = ApiConfig.getApiService().getEventById(id)
@@ -45,5 +42,9 @@ class DetailViewModel : ViewModel() {
                 Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
         })
+    }
+
+    companion object {
+        private const val TAG = "DetailViewModel"
     }
 }

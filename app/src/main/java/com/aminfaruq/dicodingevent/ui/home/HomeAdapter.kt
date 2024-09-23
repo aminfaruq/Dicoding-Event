@@ -18,12 +18,6 @@ class HomeAdapter(
     private val finishedEvents: List<EventDetail>,
     private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    companion object {
-        const val VIEW_TYPE_UPCOMING = 0
-        const val VIEW_TYPE_FINISHED = 1
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_UPCOMING -> {
@@ -69,6 +63,11 @@ class HomeAdapter(
             1 -> VIEW_TYPE_FINISHED
             else -> throw IllegalArgumentException("Invalid position")
         }
+    }
+
+    companion object {
+        const val VIEW_TYPE_UPCOMING = 0
+        const val VIEW_TYPE_FINISHED = 1
     }
 }
 

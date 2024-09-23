@@ -1,6 +1,5 @@
 package com.aminfaruq.dicodingevent.ui.upcoming
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,11 +21,6 @@ class UpcomingViewModel : ViewModel() {
     private val _isError = MutableLiveData<Boolean>()
     val isError: LiveData<Boolean> = _isError
 
-    companion object {
-        private const val TAG = "UpcomingViewModel"
-        private const val UPCOMING = 1
-    }
-
     init {
         requestUpcoming()
     }
@@ -43,17 +37,19 @@ class UpcomingViewModel : ViewModel() {
                         _listUpcoming.value = response.body()?.listEvents ?: emptyList()
                     } else {
                         _isError.value = true
-                        Log.e(TAG, "onFailure: ${response.message()}")
                     }
                 }
 
                 override fun onFailure(call: Call<EventResponse>, t: Throwable) {
                     _isLoading.value = false
                     _isError.value = true
-                    Log.e(TAG, "onFailure: ${t.message.toString()}")
                 }
 
             })
         }
+    }
+
+    companion object {
+        private const val UPCOMING = 1
     }
 }
