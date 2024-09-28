@@ -33,7 +33,7 @@ class HomeAdapter(
     }
 
     override fun getItemCount(): Int {
-        return 2 // Two sections: upcoming and finished
+        return 2
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

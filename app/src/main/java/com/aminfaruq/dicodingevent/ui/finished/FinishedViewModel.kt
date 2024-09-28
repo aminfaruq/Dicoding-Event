@@ -3,14 +3,11 @@ package com.aminfaruq.dicodingevent.ui.finished
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.aminfaruq.dicodingevent.data.api.ApiConfig
 import com.aminfaruq.dicodingevent.data.response.EventDetail
-import com.aminfaruq.dicodingevent.data.response.EventResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.aminfaruq.dicodingevent.ui.EventRepository
+import com.aminfaruq.dicodingevent.data.Result
 
-class FinishedViewModel : ViewModel() {
+class FinishedViewModel(private val repository: EventRepository) : ViewModel() {
 
     private val _listFinished = MutableLiveData<List<EventDetail>>()
     val listFinished: LiveData<List<EventDetail>> = _listFinished
@@ -37,23 +34,24 @@ class FinishedViewModel : ViewModel() {
     }
 
     private fun makeApiCall(active: Int?, q: String?) {
-        val client = ApiConfig.getApiService().getListEvent(active = active, q = q)
-        client.enqueue(object : Callback<EventResponse> {
-            override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    _isError.value = false
-                    _listFinished.value = response.body()?.listEvents ?: emptyList()
-                } else {
-                    _isError.value = true
-                }
-            }
+        repository.getEvents(active, q).observeForever { result ->
+            handleResult(result)
+        }
+    }
 
-            override fun onFailure(call: Call<EventResponse>, t: Throwable) {
+    private fun handleResult(result: Result<List<EventDetail>>) {
+        when (result) {
+            is Result.Loading -> _isLoading.value = true
+            is Result.Success -> {
+                _isLoading.value = false
+                _listFinished.value = result.data
+                _isError.value = false
+            }
+            is Result.Error -> {
                 _isLoading.value = false
                 _isError.value = true
             }
-        })
+        }
     }
 
     companion object {

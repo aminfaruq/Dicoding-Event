@@ -10,21 +10,23 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import com.aminfaruq.dicodingevent.databinding.ActivityDetailBinding
+import com.aminfaruq.dicodingevent.ui.ViewModelFactory
 import com.aminfaruq.dicodingevent.utils.ErrorDialog
 import com.bumptech.glide.Glide
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    private val viewModel by viewModels<DetailViewModel>()
-    companion object {
-        const val EXTRA_ID = "ID"
-    }
 
     @SuppressLint("SetTextI18n", "QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val factory: ViewModelFactory = ViewModelFactory.getInstance()
+        val viewModel: DetailViewModel by viewModels {
+            factory
+        }
 
         val id = intent.getIntExtra(EXTRA_ID, 0)
 
@@ -85,5 +87,9 @@ class DetailActivity : AppCompatActivity() {
             binding.openLinkButton.visibility = View.VISIBLE
         }
         binding.detailLoadingView.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    companion object {
+        const val EXTRA_ID = "ID"
     }
 }

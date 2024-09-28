@@ -14,6 +14,7 @@ import com.aminfaruq.dicodingevent.MainActivity
 import com.aminfaruq.dicodingevent.R
 import com.aminfaruq.dicodingevent.data.response.EventDetail
 import com.aminfaruq.dicodingevent.databinding.FragmentFinishedBinding
+import com.aminfaruq.dicodingevent.ui.ViewModelFactory
 import com.aminfaruq.dicodingevent.ui.detail.DetailActivity
 import com.aminfaruq.dicodingevent.ui.home.OnItemClickListener
 import com.aminfaruq.dicodingevent.utils.ErrorDialog
@@ -21,7 +22,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class FinishedFragment : Fragment(), OnItemClickListener {
 
-    private val viewModel by viewModels<FinishedViewModel>()
     private lateinit var binding: FragmentFinishedBinding
     private lateinit var adapter: FinishedItemAdapter
 
@@ -39,6 +39,11 @@ class FinishedFragment : Fragment(), OnItemClickListener {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvFinished.layoutManager = layoutManager
 
+        val factory: ViewModelFactory = ViewModelFactory.getInstance()
+        val viewModel: FinishedViewModel by viewModels {
+            factory
+        }
+
         viewModel.listFinished.observe(viewLifecycleOwner) {
             setupList(it)
         }
@@ -52,7 +57,6 @@ class FinishedFragment : Fragment(), OnItemClickListener {
                 val errorDialog = ErrorDialog()
                 errorDialog.setRetryCallback(object : ErrorDialog.RetryCallback {
                     override fun onRetry() {
-                        // Handle the retry event here
                         errorDialog.dismiss()
                         viewModel.requestFinished(canSearch = true)
                     }
@@ -65,17 +69,13 @@ class FinishedFragment : Fragment(), OnItemClickListener {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                // Check if the user has scrolled to the bottom of the RecyclerView
                 if (dy > 0 && recyclerView.canScrollVertically(1)) {
-                    // Hide the bottom navigation bar
                     (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility =
                         View.GONE
                 } else {
-                    // Show bottom navigation bar
                     (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility =
                         View.VISIBLE
                 }
-
             }
         })
 

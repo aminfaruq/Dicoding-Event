@@ -13,13 +13,13 @@ import com.aminfaruq.dicodingevent.MainActivity
 import com.aminfaruq.dicodingevent.R
 import com.aminfaruq.dicodingevent.data.response.EventDetail
 import com.aminfaruq.dicodingevent.databinding.FragmentHomeBinding
+import com.aminfaruq.dicodingevent.ui.ViewModelFactory
 import com.aminfaruq.dicodingevent.ui.detail.DetailActivity
 import com.aminfaruq.dicodingevent.utils.ErrorDialog
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeFragment : Fragment() , OnItemClickListener{
 
-    private val viewModel by viewModels<HomeViewModel>()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: HomeAdapter
 
@@ -35,6 +35,12 @@ class HomeFragment : Fragment() , OnItemClickListener{
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvHome.layoutManager = LinearLayoutManager(requireContext())
+
+        val factory: ViewModelFactory = ViewModelFactory.getInstance()
+        val viewModel: HomeViewModel by viewModels {
+            factory
+        }
+
         viewModel.listUpcoming.observe(viewLifecycleOwner) { upcomingEvents ->
             viewModel.listFinished.observe(viewLifecycleOwner) { finishedEvents ->
                 setupList(upcomingEvents, finishedEvents)
@@ -64,12 +70,9 @@ class HomeFragment : Fragment() , OnItemClickListener{
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                // Check if the user has scrolled to the bottom of the RecyclerView
                 if (dy > 0 && recyclerView.canScrollVertically(1)) {
-                    // Hide the bottom navigation bar
                     (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
                 } else if (dy < 0 && recyclerView.canScrollVertically(-1)) {
-                    // Show the bottom navigation bar
                     (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
                 }
             }

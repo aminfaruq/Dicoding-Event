@@ -1,17 +1,13 @@
 package com.aminfaruq.dicodingevent.ui.detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.aminfaruq.dicodingevent.data.api.ApiConfig
+import com.aminfaruq.dicodingevent.data.Result
 import com.aminfaruq.dicodingevent.data.response.EventDetail
-import com.aminfaruq.dicodingevent.data.response.EventResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.aminfaruq.dicodingevent.ui.EventRepository
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(private val repository: EventRepository) : ViewModel() {
 
     private val _eventDetail = MutableLiveData<EventDetail>()
     val eventDetail: LiveData<EventDetail> = _eventDetail
@@ -23,28 +19,27 @@ class DetailViewModel : ViewModel() {
     val isError: LiveData<Boolean> = _isError
 
     fun requestDetail(id: Int) {
-        val client = ApiConfig.getApiService().getEventById(id)
-        client.enqueue(object : Callback<EventResponse> {
-            override fun onResponse(call: Call<EventResponse>, response: Response<EventResponse>) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    _isError.value = false
-                    _eventDetail.value = response.body()?.event
-                } else {
-                    _isError.value = true
-                    Log.e(TAG, "onFailure: ${response.message()}")
-                }
-            }
+        _isLoading.value = true
 
-            override fun onFailure(call: Call<EventResponse>, t: Throwable) {
+        repository.getEventById(id).observeForever { result ->
+            handleResult(result)
+        }
+    }
+
+    private fun handleResult(result: Result<EventDetail>) {
+        when (result) {
+            is Result.Loading -> _isLoading.value = true
+            is Result.Success -> {
+                _isLoading.value = false
+                _eventDetail.value = result.data
+                _isError.value = false
+            }
+            is Result.Error -> {
                 _isLoading.value = false
                 _isError.value = true
-                Log.e(TAG, "onFailure: ${t.message.toString()}")
             }
-        })
+        }
     }
 
-    companion object {
-        private const val TAG = "DetailViewModel"
-    }
+    companion object
 }
