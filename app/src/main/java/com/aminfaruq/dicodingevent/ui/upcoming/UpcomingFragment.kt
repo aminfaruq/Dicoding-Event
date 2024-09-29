@@ -38,7 +38,7 @@ class UpcomingFragment : Fragment(), OnItemClickListener {
         val layoutManager = GridLayoutManager(requireContext(), 2)
         binding.rvUpcoming.layoutManager = layoutManager
 
-        val factory: ViewModelFactory = ViewModelFactory.getInstance()
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireActivity())
         val viewModel: UpcomingViewModel by viewModels {
             factory
         }

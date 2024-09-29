@@ -39,7 +39,7 @@ class FinishedFragment : Fragment(), OnItemClickListener {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.rvFinished.layoutManager = layoutManager
 
-        val factory: ViewModelFactory = ViewModelFactory.getInstance()
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireActivity())
         val viewModel: FinishedViewModel by viewModels {
             factory
         }

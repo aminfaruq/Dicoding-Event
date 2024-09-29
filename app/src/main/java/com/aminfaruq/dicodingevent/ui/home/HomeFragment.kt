@@ -36,7 +36,7 @@ class HomeFragment : Fragment() , OnItemClickListener{
 
         binding.rvHome.layoutManager = LinearLayoutManager(requireContext())
 
-        val factory: ViewModelFactory = ViewModelFactory.getInstance()
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireActivity())
         val viewModel: HomeViewModel by viewModels {
             factory
         }
