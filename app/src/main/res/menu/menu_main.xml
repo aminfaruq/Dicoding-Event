@@ -15,4 +15,9 @@
         android:id="@+id/finishedFragment"
         android:icon="@drawable/baseline_check_circle_outline_24"
         android:title=""/>
+
+    <item
+        android:id="@+id/favoriteFragment"
+        android:icon="@drawable/baseline_bookmark_24"
+        android:title=""/>
 </menu>
