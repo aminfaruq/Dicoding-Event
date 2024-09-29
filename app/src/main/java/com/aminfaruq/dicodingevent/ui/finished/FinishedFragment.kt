@@ -9,7 +9,6 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.aminfaruq.dicodingevent.MainActivity
 import com.aminfaruq.dicodingevent.R
 import com.aminfaruq.dicodingevent.data.response.EventDetail
@@ -18,7 +17,7 @@ import com.aminfaruq.dicodingevent.ui.ViewModelFactory
 import com.aminfaruq.dicodingevent.ui.detail.DetailActivity
 import com.aminfaruq.dicodingevent.ui.home.OnItemClickListener
 import com.aminfaruq.dicodingevent.utils.ErrorDialog
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.aminfaruq.dicodingevent.utils.hideBottomNavigationOnScroll
 
 class FinishedFragment : Fragment(), OnItemClickListener {
 
@@ -65,19 +64,7 @@ class FinishedFragment : Fragment(), OnItemClickListener {
             }
         }
 
-        binding.rvFinished.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                if (dy > 0 && recyclerView.canScrollVertically(1)) {
-                    (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility =
-                        View.GONE
-                } else {
-                    (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility =
-                        View.VISIBLE
-                }
-            }
-        })
+        binding.rvFinished.hideBottomNavigationOnScroll(activity as MainActivity, R.id.bottomNavigationView)
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

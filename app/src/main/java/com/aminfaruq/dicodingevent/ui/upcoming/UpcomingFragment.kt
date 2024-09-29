@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.aminfaruq.dicodingevent.MainActivity
 import com.aminfaruq.dicodingevent.R
 import com.aminfaruq.dicodingevent.data.response.EventDetail
@@ -17,7 +16,7 @@ import com.aminfaruq.dicodingevent.ui.ViewModelFactory
 import com.aminfaruq.dicodingevent.ui.detail.DetailActivity
 import com.aminfaruq.dicodingevent.ui.home.OnItemClickListener
 import com.aminfaruq.dicodingevent.utils.ErrorDialog
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.aminfaruq.dicodingevent.utils.hideBottomNavigationOnScroll
 
 class UpcomingFragment : Fragment(), OnItemClickListener {
 
@@ -65,17 +64,7 @@ class UpcomingFragment : Fragment(), OnItemClickListener {
             }
         }
 
-        binding.rvUpcoming.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                if (dy > 0 && recyclerView.canScrollVertically(1)) {
-                    (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.GONE
-                } else if (dy < 0 && recyclerView.canScrollVertically(-1)) {
-                    (activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigationView).visibility = View.VISIBLE
-                }
-            }
-        })
+        binding.rvUpcoming.hideBottomNavigationOnScroll(activity as MainActivity, R.id.bottomNavigationView)
     }
 
     private fun setupList(list: List<EventDetail>) {

@@ -2,11 +2,15 @@ package com.aminfaruq.dicodingevent
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import com.aminfaruq.dicodingevent.ui.ViewModelFactory
+import com.aminfaruq.dicodingevent.ui.settings.SettingViewModel
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
@@ -24,5 +28,18 @@ class SplashScreenActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }, 3000)
+
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
+        val viewModel: SettingViewModel by viewModels {
+            factory
+        }
+
+        viewModel.getThemeSettings().observe(this) { isDarkModeActivate: Boolean ->
+            if (isDarkModeActivate) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
     }
 }

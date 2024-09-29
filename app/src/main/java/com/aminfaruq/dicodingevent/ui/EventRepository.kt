@@ -1,15 +1,18 @@
 package com.aminfaruq.dicodingevent.ui
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import com.aminfaruq.dicodingevent.data.Result
 import com.aminfaruq.dicodingevent.data.api.ApiService
 import com.aminfaruq.dicodingevent.data.response.EventDetail
 import com.aminfaruq.dicodingevent.data.room.EventsDao
+import com.aminfaruq.dicodingevent.ui.settings.SettingPreferences
 
 class EventRepository private constructor(
     private val apiService: ApiService,
-    private val eventDao: EventsDao
+    private val eventDao: EventsDao,
+    private val settingPreferences: SettingPreferences
 ) {
 
     fun getEvents(
@@ -59,16 +62,24 @@ class EventRepository private constructor(
 
     fun isFavoriteEvent(id: Int):  LiveData<List<EventDetail>> = eventDao.getEventsById(id)
 
+    fun getThemeSetting(): LiveData<Boolean> {
+        return settingPreferences.getThemeSetting().asLiveData()
+    }
+
+    suspend fun saveThemeSetting(isDarkModeActive: Boolean) {
+        settingPreferences.saveThemeSetting(isDarkModeActive)
+    }
+
     companion object {
         @Volatile
         private var instance: EventRepository? = null
         fun getInstance(
             apiService: ApiService,
-            eventDao: EventsDao
+            eventDao: EventsDao,
+            settingPreferences: SettingPreferences
         ): EventRepository =
             instance ?: synchronized(this) {
-                instance ?: EventRepository(apiService, eventDao)
+                instance ?: EventRepository(apiService, eventDao, settingPreferences)
             }.also { instance = it }
     }
-
 }

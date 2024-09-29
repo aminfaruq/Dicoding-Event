@@ -8,6 +8,7 @@ import com.aminfaruq.dicodingevent.ui.di.Injection
 import com.aminfaruq.dicodingevent.ui.favorite.FavoriteViewModel
 import com.aminfaruq.dicodingevent.ui.finished.FinishedViewModel
 import com.aminfaruq.dicodingevent.ui.home.HomeViewModel
+import com.aminfaruq.dicodingevent.ui.settings.SettingViewModel
 import com.aminfaruq.dicodingevent.ui.upcoming.UpcomingViewModel
 
 class ViewModelFactory private constructor(private val repository: EventRepository) :
@@ -28,6 +29,9 @@ class ViewModelFactory private constructor(private val repository: EventReposito
         }
         if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
             return FavoriteViewModel(repository) as T
+        }
+        if (modelClass.isAssignableFrom(SettingViewModel::class.java)) {
+            return SettingViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

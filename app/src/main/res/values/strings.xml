@@ -6,4 +6,6 @@
     <string name="open_event">Open Event</string>
     <string name="for_detail_image">for detail image</string>
     <string name="image_finished_item">image finished item</string>
+    <string name="save">Save</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>
