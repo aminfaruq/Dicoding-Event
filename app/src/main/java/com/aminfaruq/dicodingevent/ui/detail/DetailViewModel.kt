@@ -36,6 +36,7 @@ class DetailViewModel(private val repository: EventRepository) : ViewModel() {
                 _eventDetail.value = result.data
                 _isError.value = false
             }
+
             is Result.Error -> {
                 _isLoading.value = false
                 _isError.value = true

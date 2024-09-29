@@ -32,7 +32,6 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.apply {
-            title = "Detail Event"
             setDisplayHomeAsUpEnabled(true)
         }
 
@@ -47,7 +46,7 @@ class DetailActivity : AppCompatActivity() {
             Glide.with(this)
                 .load(item.mediaCover)
                 .into(binding.imageCover)
-
+            supportActionBar?.title = item.name
             binding.eventName.text = item.name
             binding.ownerName.text = item.ownerName
             binding.beginTime.text = item.beginTime
@@ -68,7 +67,11 @@ class DetailActivity : AppCompatActivity() {
                 if (openLinkIntent.resolveActivity(packageManager) != null) {
                     startActivity(openLinkIntent)
                 } else {
-                    Toast.makeText(this, "There no Application cant open this link", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "There no Application cant open this link",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -117,6 +120,7 @@ class DetailActivity : AppCompatActivity() {
                 finish()
                 true
             }
+
             R.id.action_save -> {
                 if (isFavorite) {
                     currentEventDetail.id?.let { viewModel.removeFromFavorite(it) }
@@ -130,6 +134,7 @@ class DetailActivity : AppCompatActivity() {
                 isFavorite = !isFavorite
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

@@ -60,7 +60,7 @@ class EventRepository private constructor(
         eventDao.deleteEventById(id)
     }
 
-    fun isFavoriteEvent(id: Int):  LiveData<List<EventDetail>> = eventDao.getEventsById(id)
+    fun isFavoriteEvent(id: Int): LiveData<List<EventDetail>> = eventDao.getEventsById(id)
 
     fun getThemeSetting(): LiveData<Boolean> {
         return settingPreferences.getThemeSetting().asLiveData()

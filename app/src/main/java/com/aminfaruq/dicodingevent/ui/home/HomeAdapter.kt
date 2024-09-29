@@ -13,6 +13,7 @@ import com.aminfaruq.dicodingevent.ui.upcoming.UpcomingItemAdapter
 interface OnItemClickListener {
     fun onItemClick(id: Int)
 }
+
 class HomeAdapter(
     private val upcomingEvents: List<EventDetail>,
     private val finishedEvents: List<EventDetail>,
@@ -21,13 +22,23 @@ class HomeAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             VIEW_TYPE_UPCOMING -> {
-                val binding = UpcomingSectionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = UpcomingSectionBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 HomeViewHolderUpcoming(binding)
             }
+
             VIEW_TYPE_FINISHED -> {
-                val binding = FinishedSectionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = FinishedSectionBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 HomeViewHolderFinished(binding)
             }
+
             else -> throw RuntimeException("Unknown view type")
         }
     }
@@ -44,15 +55,18 @@ class HomeAdapter(
                     LinearLayoutManager.HORIZONTAL,
                     false
                 )
-                holder.binding.rvSectionUpcoming.adapter = UpcomingItemAdapter(upcomingEvents, onItemClickListener)
+                holder.binding.rvSectionUpcoming.adapter =
+                    UpcomingItemAdapter(upcomingEvents, onItemClickListener)
             }
+
             is HomeViewHolderFinished -> {
                 holder.binding.rvFinishedSection.layoutManager = LinearLayoutManager(
                     holder.itemView.context,
                     LinearLayoutManager.VERTICAL,
                     false
                 )
-                holder.binding.rvFinishedSection.adapter = FinishedItemAdapter(finishedEvents, onItemClickListener)
+                holder.binding.rvFinishedSection.adapter =
+                    FinishedItemAdapter(finishedEvents, onItemClickListener)
             }
         }
     }
@@ -71,6 +85,8 @@ class HomeAdapter(
     }
 }
 
-class HomeViewHolderUpcoming(val binding: UpcomingSectionBinding) : RecyclerView.ViewHolder(binding.root)
+class HomeViewHolderUpcoming(val binding: UpcomingSectionBinding) :
+    RecyclerView.ViewHolder(binding.root)
 
-class HomeViewHolderFinished(val binding: FinishedSectionBinding) : RecyclerView.ViewHolder(binding.root)
+class HomeViewHolderFinished(val binding: FinishedSectionBinding) :
+    RecyclerView.ViewHolder(binding.root)

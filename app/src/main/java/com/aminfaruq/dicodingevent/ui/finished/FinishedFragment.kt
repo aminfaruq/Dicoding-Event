@@ -64,14 +64,17 @@ class FinishedFragment : Fragment(), OnItemClickListener {
             }
         }
 
-        binding.rvFinished.hideBottomNavigationOnScroll(activity as MainActivity, R.id.bottomNavigationView)
+        binding.rvFinished.hideBottomNavigationOnScroll(
+            activity as MainActivity,
+            R.id.bottomNavigationView
+        )
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query.isNullOrEmpty()) {
                     viewModel.requestFinished(canSearch = true)
                 } else {
-                    viewModel.requestFinished(-1, query , true)
+                    viewModel.requestFinished(-1, query, true)
                 }
                 return true
             }

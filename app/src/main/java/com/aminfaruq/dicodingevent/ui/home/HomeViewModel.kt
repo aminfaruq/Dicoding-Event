@@ -52,6 +52,7 @@ class HomeViewModel(private val eventRepository: EventRepository) : ViewModel() 
                 liveData.value = result.data
                 _isError.value = false
             }
+
             is Result.Error -> {
                 _isLoading.value = false
                 _isError.value = true

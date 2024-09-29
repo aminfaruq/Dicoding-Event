@@ -17,7 +17,7 @@ import com.aminfaruq.dicodingevent.ui.detail.DetailActivity
 import com.aminfaruq.dicodingevent.utils.ErrorDialog
 import com.aminfaruq.dicodingevent.utils.hideBottomNavigationOnScroll
 
-class HomeFragment : Fragment() , OnItemClickListener{
+class HomeFragment : Fragment(), OnItemClickListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: HomeAdapter
@@ -65,7 +65,10 @@ class HomeFragment : Fragment() , OnItemClickListener{
             }
         }
 
-        binding.rvHome.hideBottomNavigationOnScroll(activity as MainActivity, R.id.bottomNavigationView)
+        binding.rvHome.hideBottomNavigationOnScroll(
+            activity as MainActivity,
+            R.id.bottomNavigationView
+        )
 
     }
 
